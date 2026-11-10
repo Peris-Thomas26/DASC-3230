@@ -1,0 +1,44 @@
+{
+  "seed": 3230,
+  "epochs": 20,
+  "batch_size": 128,
+  "lr": 0.1,
+  "positive_digit": 5,
+  "binary_threshold": 0.2,
+  "selected_multiclass": "mlp10",
+  "best_epochs": {
+    "binary": 20,
+    "linear10": 20,
+    "mlp10": 17
+  },
+  "multiclass_validation": {
+    "linear10": {
+      "ce": 0.38267555832862854,
+      "accuracy": 0.890999972820282
+    },
+    "mlp10": {
+      "ce": 0.31597548723220825,
+      "accuracy": 0.9079999923706055
+    }
+  },
+  "pixel_divisor": 255.0,
+  "input_shape": [
+    28,
+    28
+  ],
+  "architectures": {
+    "binary": [
+      784,
+      1
+    ],
+    "linear10": [
+      784,
+      10
+    ],
+    "mlp10": [
+      784,
+      64,
+      10
+    ]
+  }
+}

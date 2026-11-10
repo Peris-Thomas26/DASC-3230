@@ -1,0 +1,209 @@
+{
+  "build_environment": {
+    "numpy": "2.0.2",
+    "python": "3.9.6"
+  },
+  "builder": "individual_project_v3_TA/build/prepare_data.py",
+  "data_payloads": {
+    "ATTRIBUTION.txt": {
+      "bytes": 2982,
+      "sha256": "ec88feefe0c85dde45c3906561ff6f4b4d8bf9933c98ab8d440a770c77493d33"
+    },
+    "fashion_small.npz": {
+      "bytes": 950382,
+      "sha256": "a8b4ae8bd359bd603819ee11482e2c9d94dc71a21f1464e78e35e979c6e15fe0"
+    },
+    "htru2_small.npz": {
+      "bytes": 80579,
+      "sha256": "9a71751810ce3a90a0c058b699b335ec479bc0e915de417a43d146c1696bb6c9"
+    }
+  },
+  "datasets": {
+    "fashion_small.npz": {
+      "checks": {
+        "all_four_official_md5_match": true,
+        "class_counts_balanced_within_each_split": true,
+        "course_train_validation_source_row_intersection": 0,
+        "exact_pixel_hash_intersections": {
+          "train_test": 0,
+          "train_val": 0,
+          "val_test": 0
+        },
+        "selected_pixels_equal_source": true
+      },
+      "course_class_names": [
+        "T-shirt/top",
+        "Trouser",
+        "Bag"
+      ],
+      "course_label_mapping": {
+        "0": "0 (T-shirt/top)",
+        "1": "1 (Trouser)",
+        "8": "2 (Bag)"
+      },
+      "creators": [
+        "Han Xiao",
+        "Kashif Rasul",
+        "Roland Vollgraf"
+      ],
+      "image_dtype": "uint8",
+      "image_shape": [
+        28,
+        28
+      ],
+      "image_value_range": [
+        0,
+        255
+      ],
+      "license": "MIT",
+      "license_url": "https://github.com/zalandoresearch/fashion-mnist/blob/master/LICENSE",
+      "official_test_images": 10000,
+      "official_training_images": 60000,
+      "original_label_values": [
+        0,
+        1,
+        8
+      ],
+      "paper_url": "https://arxiv.org/abs/1708.07747",
+      "scope": "The selected arrays have no exact image matches across splits. Near-duplicate images and product identity overlap have not been audited.",
+      "selection": {
+        "algorithm": "With a fresh NumPy default_rng(3230), visit original labels 0, 1, 8. For each label permute official-training rows, take rows 0:400 for course training and 400:500 for validation, then permute official-test rows and take rows 0:200 for testing. After all classes, shuffle the collected training, validation, and test lists in that order using the same generator.",
+        "row_id_convention": "Zero-based image number in the relevant official IDX split. Train/validation IDs refer to official train; test IDs refer to official test.",
+        "seed": 3230,
+        "test": {
+          "official_source_split": "test",
+          "per_class": 200,
+          "rows": 600
+        },
+        "train": {
+          "official_source_split": "train",
+          "per_class": 400,
+          "rows": 1200
+        },
+        "validation": {
+          "official_source_split": "train",
+          "per_class": 100,
+          "rows": 300
+        }
+      },
+      "source_files": {
+        "t10k-images-idx3-ubyte.gz": {
+          "bytes": 4422102,
+          "md5": "bef4ecab320f06d8554ea6380940ec79",
+          "sha256": "346e55b948d973a97e58d2351dde16a484bd415d4595297633bb08f03db6a073",
+          "url": "https://raw.githubusercontent.com/zalandoresearch/fashion-mnist/master/data/fashion/t10k-images-idx3-ubyte.gz"
+        },
+        "t10k-labels-idx1-ubyte.gz": {
+          "bytes": 5148,
+          "md5": "bb300cfdad3c16e7a12a480ee83cd310",
+          "sha256": "67da17c76eaffca5446c3361aaab5c3cd6d1c2608764d35dfb1850b086bf8dd5",
+          "url": "https://raw.githubusercontent.com/zalandoresearch/fashion-mnist/master/data/fashion/t10k-labels-idx1-ubyte.gz"
+        },
+        "train-images-idx3-ubyte.gz": {
+          "bytes": 26421880,
+          "md5": "8d4fb7e6c68d591d4c3dfef9ec88bf0d",
+          "sha256": "3aede38d61863908ad78613f6a32ed271626dd12800ba2636569512369268a84",
+          "url": "https://raw.githubusercontent.com/zalandoresearch/fashion-mnist/master/data/fashion/train-images-idx3-ubyte.gz"
+        },
+        "train-labels-idx1-ubyte.gz": {
+          "bytes": 29515,
+          "md5": "25c81989df183df01b3e8a0aad5dffbe",
+          "sha256": "a04f17134ac03560a47e3764e11b92fc97de4d1bfaf8ba1a3aa29af54cc90845",
+          "url": "https://raw.githubusercontent.com/zalandoresearch/fashion-mnist/master/data/fashion/train-labels-idx1-ubyte.gz"
+        }
+      },
+      "source_url": "https://github.com/zalandoresearch/fashion-mnist",
+      "title": "Fashion-MNIST",
+      "transformations": [
+        "Select three original classes and fixed rows; keep all pixel values unchanged.",
+        "Remap original labels 0, 1, 8 to course labels 0, 1, 2.",
+        "Store original 28 x 28 uint8 arrays; normalization and tensor conversion occur in the notebook."
+      ]
+    },
+    "htru2_small.npz": {
+      "checks": {
+        "all_source_values_finite": true,
+        "exact_duplicate_source_feature_rows": 0,
+        "selected_values_equal_source": true,
+        "split_source_row_intersections": 0
+      },
+      "citation": "Lyon, R. (2015). HTRU2 [Dataset]. UCI Machine Learning Repository.",
+      "column_metadata_note": "The source README and ARFF/web metadata disagree about the ordering of skewness and kurtosis columns. Those columns are excluded. The four retained columns have consistent mean/standard-deviation definitions.",
+      "creators": [
+        "Robert Lyon"
+      ],
+      "doi": "https://doi.org/10.24432/C5DK6R",
+      "download_url": "https://archive.ics.uci.edu/static/public/372/htru2.zip",
+      "feature_descriptions": [
+        "Mean of the integrated pulse profile",
+        "Standard deviation of the integrated pulse profile",
+        "Mean of the DM-SNR curve",
+        "Standard deviation of the DM-SNR curve"
+      ],
+      "feature_names": [
+        "profile_mean",
+        "profile_std",
+        "dm_snr_mean",
+        "dm_snr_std"
+      ],
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "retained_columns_zero_based": [
+        0,
+        1,
+        4,
+        5
+      ],
+      "scope": "A held-out subset of the published candidate collection. Source object IDs and sky positions are unavailable, so object/sky-region transfer is not audited.",
+      "selection": {
+        "algorithm": "With a fresh NumPy default_rng(3230), permute source rows within background class, then pulsar class. Take background rows 0:1500 and pulsar rows 0:150 for training, background rows 1500:1900 for calibration, background rows 1900:2700 and pulsar rows 150:250 for testing. Shuffle training, then testing with the same generator. Calibration retains its selected permutation order.",
+        "calibration": {
+          "background": 400,
+          "pulsar": 0,
+          "rows": 400
+        },
+        "row_id_convention": "Zero-based data-row number in HTRU_2.csv (no header).",
+        "seed": 3230,
+        "test": {
+          "background": 800,
+          "pulsar": 100,
+          "rows": 900
+        },
+        "test_pulsar_fraction": 0.1111111111111111,
+        "train": {
+          "background": 1500,
+          "pulsar": 150,
+          "rows": 1650
+        }
+      },
+      "source_files": {
+        "HTRU_2.csv": {
+          "bytes": 1730114,
+          "sha256": "b13b4d8929e96ecd196e464c1c8a454c3ac2ffa631015f6388957531a9923f59"
+        },
+        "htru2.zip": {
+          "bytes": 1563015,
+          "sha256": "ba442c076dd22a8952700f26e38499fc1806037dcf7bea0e125e6bfba393f379"
+        }
+      },
+      "source_label_counts": {
+        "0_background": 16259,
+        "1_pulsar": 1639
+      },
+      "source_shape": [
+        17898,
+        9
+      ],
+      "source_url": "https://archive.ics.uci.edu/dataset/372/htru2",
+      "title": "HTRU2",
+      "transformations": [
+        "Select the four mean/standard-deviation columns; keep their values unchanged.",
+        "Keep original binary labels: 0 = non-pulsar/RFI/noise, 1 = pulsar.",
+        "No scaling, PCA, or density fitting is performed during data preparation."
+      ]
+    }
+  },
+  "manifest_version": 1,
+  "project": "DASC 3230 individual project 3",
+  "seed": 3230
+}

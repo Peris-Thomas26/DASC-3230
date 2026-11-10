@@ -1,0 +1,404 @@
+{
+  "manifest_version": 1,
+  "project": "DASC3230 Individual Project 2",
+  "prepared_date": "2026-10-09",
+  "builder": "individual_project_v2_TA/build/prepare_data.py",
+  "numpy_version_used": "2.3.5",
+  "source_datasets": {
+    "geomet": {
+      "title": "GeoMet dataset",
+      "creators": [
+        "Hoffimann, Júlio",
+        "Augusto, José",
+        "Resende, Lucas",
+        "Mathias, Marlon",
+        "Mazzinghy, Douglas",
+        "Bianchetti, Matheus",
+        "Mendes, Mônica",
+        "Souza, Thiago",
+        "Andrade, Vitor",
+        "Domingues, Tarcísio",
+        "Silva, Wesley",
+        "Silva, Ruberlan",
+        "Couto, Danielly",
+        "Fonseca, Elisabeth",
+        "Gonçalves, Keila"
+      ],
+      "citation": "Hoffimann, J., et al. (2022). GeoMet dataset. Zenodo. https://doi.org/10.5281/zenodo.7051975",
+      "record_url": "https://zenodo.org/records/7051975",
+      "doi": "10.5281/zenodo.7051975",
+      "source_url": "https://zenodo.org/records/7051975/files/drillholes.csv?download=1",
+      "metadata_url": "https://zenodo.org/api/records/7051975",
+      "source_file": "drillholes.csv",
+      "source_sha256": "e0636576be0a0f9d2d270f34871ae16be8a42ff35457ae2c0179304de1abdc10",
+      "source_md5_as_published": "bf48a6b1135113b6e6cf7b32f95315ad",
+      "metadata_snapshot_sha256": "e6612f5a17566dcaa9713e1cb891c3270389f84d00e64764ece7572dd1d483b9",
+      "license": {
+        "id": "CC-BY-4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "evidence": "License id cc-by-4.0 in the pinned Zenodo record metadata.",
+        "attribution": "GeoMet dataset by the listed creators; the selected and renamed columns and added sample_id are documented under spatial.changes_from_source."
+      },
+      "coordinate_and_unit_reference": "https://juliaearth.github.io/geospatial-data-science-with-julia/12-mining.html",
+      "obfuscation_reference": "https://doi.org/10.1007/s11004-022-10013-1"
+    },
+    "mnist": {
+      "title": "MNIST handwritten digits dataset, Keras NPZ distribution",
+      "copyright_holders": [
+        "Yann LeCun",
+        "Corinna Cortes"
+      ],
+      "citation": "LeCun, Y., Cortes, C., and Burges, C. J. C. The MNIST database of handwritten digits. http://yann.lecun.com/exdb/mnist/",
+      "original_homepage": "http://yann.lecun.com/exdb/mnist/",
+      "source_url": "https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz",
+      "source_file": "mnist.npz",
+      "source_sha256": "731c5ac602752760c8e48fbffcf8c3b850d9dc2a2aedcf2cc48468fc17b673d1",
+      "published_hash_reference": "https://github.com/keras-team/keras/blob/master/keras/src/datasets/mnist.py",
+      "documentation_url": "https://keras.io/api/datasets/mnist/",
+      "license": {
+        "id": "CC-BY-SA-3.0",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "evidence": "The official Keras MNIST documentation states CC BY-SA 3.0, copyright Yann LeCun and Corinna Cortes, and derivation from NIST data. This is the dataset license, not the Keras software license.",
+        "attribution": "MNIST by Yann LeCun and Corinna Cortes, obtained from the official Keras distribution. The balanced subset selection and reordering are documented under mnist.selection_algorithm."
+      }
+    }
+  },
+  "spatial": {
+    "source_rows": 2000,
+    "released_rows": 2000,
+    "unique_drillholes": 119,
+    "row_order": "Original drillholes.csv order. sample_id is the zero-based source row index, excluding the header.",
+    "columns": {
+      "sample_id": {
+        "type": "integer",
+        "unit": null,
+        "role": "identifier only"
+      },
+      "hole_id": {
+        "type": "source HOLEID string",
+        "unit": null,
+        "role": "group identifier only; not a model input"
+      },
+      "x": {
+        "source_column": "X",
+        "unit": "m",
+        "role": "model input"
+      },
+      "y": {
+        "source_column": "Y",
+        "unit": "m",
+        "role": "model input"
+      },
+      "z": {
+        "source_column": "Z",
+        "unit": "m",
+        "role": "model input"
+      },
+      "copper_ppm": {
+        "source_column": "Cu ppm",
+        "unit": "ppm",
+        "role": "regression target"
+      }
+    },
+    "coordinate_description": "Released Cartesian coordinates of drill-core sample centroids; the author's worked example reports all three axes in metres. These are not latitude/longitude.",
+    "obfuscation": "The research paper identifies the public tables as obfuscated versions. The exact obfuscation method is not specified in the cited public description. This project retains the released coordinates and assays without attempting to recover confidential originals.",
+    "changes_from_source": [
+      "Select HOLEID, X, Y, Z, Cu ppm; rename columns; add sample_id.",
+      "Retain every source row and every selected numeric value, including zero copper values.",
+      "No rounding, imputation, scaling, clipping, logarithm, or coordinate transformation is applied."
+    ],
+    "split": {
+      "seed": 3230,
+      "rng": "numpy.random.default_rng (PCG64)",
+      "algorithm": "Read HOLEID as strings; obtain lexical np.unique order; create an independent default_rng(3230); shuffle this hole array once; assign first 71 holes to train, next 24 to val, last 24 to test. For each split use np.flatnonzero(np.isin(original_hole_ids, selected_holes)), retaining original row order within a split.",
+      "counts": {
+        "train": {
+          "rows": 1164,
+          "holes": 71
+        },
+        "val": {
+          "rows": 412,
+          "holes": 24
+        },
+        "test": {
+          "rows": 424,
+          "holes": 24
+        }
+      },
+      "hole_ids_in_assignment_order": {
+        "train": [
+          "102",
+          "117",
+          "11",
+          "39",
+          "37",
+          "90",
+          "52",
+          "78",
+          "103",
+          "87",
+          "81",
+          "119",
+          "26",
+          "60",
+          "53",
+          "101",
+          "98",
+          "65",
+          "34",
+          "51",
+          "10",
+          "20",
+          "114",
+          "15",
+          "13",
+          "58",
+          "27",
+          "19",
+          "14",
+          "23",
+          "56",
+          "106",
+          "84",
+          "12",
+          "7",
+          "61",
+          "86",
+          "46",
+          "2",
+          "91",
+          "76",
+          "96",
+          "3",
+          "89",
+          "75",
+          "40",
+          "104",
+          "47",
+          "115",
+          "8",
+          "9",
+          "38",
+          "57",
+          "67",
+          "118",
+          "112",
+          "100",
+          "29",
+          "64",
+          "44",
+          "31",
+          "28",
+          "18",
+          "72",
+          "1",
+          "116",
+          "43",
+          "35",
+          "95",
+          "93",
+          "5"
+        ],
+        "val": [
+          "111",
+          "82",
+          "108",
+          "24",
+          "77",
+          "33",
+          "25",
+          "107",
+          "22",
+          "94",
+          "41",
+          "66",
+          "6",
+          "62",
+          "59",
+          "21",
+          "105",
+          "79",
+          "70",
+          "85",
+          "88",
+          "113",
+          "54",
+          "71"
+        ],
+        "test": [
+          "50",
+          "69",
+          "92",
+          "32",
+          "49",
+          "55",
+          "36",
+          "83",
+          "48",
+          "45",
+          "110",
+          "42",
+          "97",
+          "16",
+          "74",
+          "80",
+          "68",
+          "109",
+          "30",
+          "73",
+          "4",
+          "99",
+          "17",
+          "63"
+        ]
+      },
+      "archive_keys": {
+        "train_idx": {
+          "shape": [
+            1164
+          ],
+          "dtype": "int64",
+          "meaning": "zero-based row indices into spatial_copper.csv"
+        },
+        "val_idx": {
+          "shape": [
+            412
+          ],
+          "dtype": "int64",
+          "meaning": "zero-based row indices into spatial_copper.csv"
+        },
+        "test_idx": {
+          "shape": [
+            424
+          ],
+          "dtype": "int64",
+          "meaning": "zero-based row indices into spatial_copper.csv"
+        }
+      },
+      "interpretation": "Held-out drillholes. No drillhole appears in more than one split. This is not a separation into distant geographical regions."
+    }
+  },
+  "mnist": {
+    "official_source_counts": {
+      "train": 60000,
+      "test": 10000
+    },
+    "selected_counts": {
+      "train": 5000,
+      "val": 1000,
+      "test": 2000
+    },
+    "counts_per_digit": {
+      "train": 500,
+      "val": 100,
+      "test": 200
+    },
+    "digits": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "pixel_unit": "uint8 grayscale intensity, 0 through 255 inclusive",
+    "image_shape": [
+      28,
+      28
+    ],
+    "seed": 3230,
+    "rng": "numpy.random.default_rng (PCG64); independent of the spatial split RNG",
+    "selection_algorithm": [
+      "Initialize one rng = np.random.default_rng(3230).",
+      "For digits 0 through 9, in this order: permute np.flatnonzero(official_y_train == digit); use the first 500 indices for train and the next 100 for val.",
+      "Then, for digits 0 through 9, in this order: permute np.flatnonzero(official_y_test == digit); use the first 200 indices for test.",
+      "Concatenate the ten class index arrays separately for train, val, and test, preserving class order at this stage.",
+      "Using the same RNG state, shuffle the combined train indices, then val indices, then test indices. Select images and labels in this final order."
+    ],
+    "source_index_interpretation": "source_train_indices and source_val_indices address rows of official x_train/y_train; source_test_indices addresses rows of official x_test/y_test. The official training and test arrays are separate namespaces.",
+    "changes_from_source": "Balanced subset selection and row reordering only. Original pixels and labels are copied exactly; images are not resized, normalized, augmented, or interpolated in the distributed archive.",
+    "archive_keys": {
+      "x_train": {
+        "shape": [
+          5000,
+          28,
+          28
+        ],
+        "dtype": "uint8"
+      },
+      "y_train": {
+        "shape": [
+          5000
+        ],
+        "dtype": "uint8"
+      },
+      "x_val": {
+        "shape": [
+          1000,
+          28,
+          28
+        ],
+        "dtype": "uint8"
+      },
+      "y_val": {
+        "shape": [
+          1000
+        ],
+        "dtype": "uint8"
+      },
+      "x_test": {
+        "shape": [
+          2000,
+          28,
+          28
+        ],
+        "dtype": "uint8"
+      },
+      "y_test": {
+        "shape": [
+          2000
+        ],
+        "dtype": "uint8"
+      },
+      "source_train_indices": {
+        "shape": [
+          5000
+        ],
+        "dtype": "int64"
+      },
+      "source_val_indices": {
+        "shape": [
+          1000
+        ],
+        "dtype": "int64"
+      },
+      "source_test_indices": {
+        "shape": [
+          2000
+        ],
+        "dtype": "int64"
+      }
+    },
+    "subset_license": "CC-BY-SA-3.0; retain attribution and this license when redistributing this selected subset."
+  },
+  "files": {
+    "spatial_copper.csv": {
+      "sha256": "8bff6c7e0a9174fc4591b4850f66ce6f638dea62ccb129d38d7900a9cdb0dabe",
+      "bytes": 120294
+    },
+    "spatial_split.npz": {
+      "sha256": "c8cb3b88919a2b2aef26a3d7a018eb5efd44d476413425d8e5dece96aea72910",
+      "bytes": 3755
+    },
+    "mnist_small.npz": {
+      "sha256": "f513fb21e5016ed7f76372f288d0b013546cc5aba8bc3dcb8ae1d088b2bfc2d3",
+      "bytes": 1325423
+    }
+  },
+  "checksum_note": "SHA-256 values cover the three data payload files. The manifest does not contain its own checksum.",
+  "reproducibility_note": "NPZ members use fixed ZIP timestamps and a fixed order. Source contents and split indices are pinned; compressed file bytes may also depend on the compression library version."
+}

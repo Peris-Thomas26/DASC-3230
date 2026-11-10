@@ -1,0 +1,11 @@
+# Install in the Python environment used by your notebook:
+# python3 -m pip install -r requirements.txt
+# Intel Macs need Python 3.9-3.12 for the available PyTorch 2.2.2 wheels.
+numpy>=1.23,<2; sys_platform == "darwin" and platform_machine == "x86_64"
+torch>=2.2.2,<2.3; sys_platform == "darwin" and platform_machine == "x86_64"
+numpy>=1.23,<3; sys_platform != "darwin" or platform_machine != "x86_64"
+torch>=2.6,<3; sys_platform != "darwin" or platform_machine != "x86_64"
+matplotlib>=3.9.4,<4
+scikit-learn>=1.6.1,<2
+notebook>=6
+ipykernel>=6
